@@ -1,19 +1,20 @@
-import  Header  from "../../Components/Header/Header";
-import { PokemonCard } from "../../Components/PokemonCard/PokemonCard";
-import { useNavigate } from "react-router-dom";
-import {irParaHome} from "../../routes/coordinator";
+import axios from "axios";
+import { useParams, useLoaderData } from "react-router-dom";
 
-export function Detalhes(props){
-    const navigate = useNavigate();
-    return(
-        <>
-        <h1>detalhes</h1>
+export const PokemonDetailsPage = () => {
+  return (
+    <div>
+      <p>DetailsPokemon</p>
+      <span>{pokemon.name}</span>
+      <span>{pokemon.id}</span>
+    </div>
+  );
+};
 
-        <Header/>
-        <button onClick={()=> irParaHome(navigate) } >
-        Voltar a Home 
-      </button>
-        <PokemonCard pokemon={props.pokemon} />
-        </>
-    )
-}
+export const pokemonDetailsLoader = async ({ params }) => {
+  const { pokemon } = params;
+
+  const res = await axios.get(`https://pokeapi.co/api/v2/pokemon/${pokemon}`);
+  console.log(res);
+  return res;
+};
